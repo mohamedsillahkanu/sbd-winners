@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School-Based Distribution of ITNs 2026 - Team Pujen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Oswald', Arial, sans-serif;
+            background: linear-gradient(135deg, #004080 0%, #00245f 50%, #003860 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated background particles */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #ffc107;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 6s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); opacity: 0.3; }
+            50% { transform: translate(30px, -30px); opacity: 0.8; }
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(0, 64, 128, 0.3);
+            border: 4px solid #ffc107;
+            animation: slideUp 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+            page-break-inside: avoid;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 100%);
+            pointer-events: none;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .icf-logo {
+            width: 100px;
+            height: 100px;
+            background: #004080;
+            border-radius: 12px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffc107;
+            font-weight: 700;
+            border: 3px solid #ffc107;
+            animation: bounce 1.5s ease-in-out infinite;
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+
+        .position-badge {
+            display: inline-block;
+            background: #ffc107;
+            color: #004080;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin: 20px 0;
+            text-transform: uppercase;
+            border: 3px solid #004080;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7); }
+            50% { box-shadow: 0 0 0 15px rgba(255, 193, 7, 0); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: #004080;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: fadeInDown 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #ffc107;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            animation: fadeInDown 0.8s ease-out 0.4s both;
+        }
+
+        .tagline {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 500;
+            animation: fadeInDown 0.8s ease-out 0.6s both;
+        }
+
+        /* Trophy SVG Container */
+        .trophy-container {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+            animation: fadeIn 0.8s ease-out 0.8s both;
+        }
+
+        svg {
+            filter: drop-shadow(0 10px 25px rgba(0, 64, 128, 0.2));
+            animation: trophyGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes trophyGlow {
+            0%, 100% { filter: drop-shadow(0 10px 25px rgba(255, 193, 7, 0.2)); }
+            50% { filter: drop-shadow(0 15px 35px rgba(255, 193, 7, 0.4)); }
+        }
+
+        /* Image Placeholder */
+        .image-section {
+            background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
+            border: 3px dashed #004080;
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            margin: 30px 0;
+            animation: fadeIn 0.8s ease-out 1s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-section::before {
+            content: '📸';
+            position: absolute;
+            font-size: 80px;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .image-label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Achievement Text */
+        .achievements {
+            background: #f9f9f9;
+            border-left: 4px solid #ffc107;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+            animation: fadeIn 0.8s ease-out 1.2s both;
+        }
+
+        .achievements h3 {
+            color: #004080;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .achievement-item {
+            display: flex;
+            align-items: center;
+            margin: 12px 0;
+            font-size: 1.1rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .achievement-item::before {
+            content: '✓';
+            width: 30px;
+            height: 30px;
+            background: #ffc107;
+            color: #004080;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* Team Name Highlight */
+        .team-name {
+            text-align: center;
+            font-size: 2rem;
+            color: #ffc107;
+            font-weight: 700;
+            margin: 30px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 64, 128, 0.2);
+            animation: scaleIn 0.8s ease-out 1.4s both;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 2px solid #004080;
+            animation: fadeIn 0.8s ease-out 1.6s both;
+        }
+
+        .organization {
+            font-size: 0.95rem;
+            color: #666;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .date {
+            font-size: 0.85rem;
+            color: #999;
+            font-weight: 400;
+        }
+
+        /* Team Members */
+        .team-members {
+            background: linear-gradient(135deg, #e7f3ff 0%, #f0f8ff 100%);
+            border: 2px solid #004080;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            animation: fadeIn 0.8s ease-out 1.5s both;
+        }
+
+        .team-members h4 {
+            color: #004080;
+            font-size: 1.1rem;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .member-card {
+            background: #ffffff;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            animation: scaleIn 0.6s ease-out both;
+        }
+
+        .member-card:nth-child(1) { animation-delay: 1.5s; }
+        .member-card:nth-child(2) { animation-delay: 1.6s; }
+        .member-card:nth-child(3) { animation-delay: 1.7s; }
+        .member-card:nth-child(4) { animation-delay: 1.8s; }
+
+        /* Download Button */
+        .download-btn {
+            background: linear-gradient(135deg, #004080 0%, #0056b3 100%);
+            color: #ffffff;
+            border: 3px solid #ffc107;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Oswald', Arial, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 64, 128, 0.3);
+        }
+
+        .download-btn:hover {
+            background: linear-gradient(135deg, #0056b3 0%, #004080 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 64, 128, 0.4);
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                padding: 35px 20px;
+                border: 3px solid #ffc107;
+                border-radius: 15px;
+            }
+
+            .header {
+                margin-bottom: 30px;
+            }
+
+            .header h1 {
+                font-size: 2.2rem;
+                margin-bottom: 10px;
+            }
+
+            .header img {
+                width: 100px;
+            }
+
+            .subtitle {
+                font-size: 0.95rem;
+                margin-bottom: 8px;
+            }
+
+            .tagline {
+                font-size: 0.9rem;
+            }
+
+            .position-badge {
+                font-size: 1.1rem;
+                padding: 11px 22px;
+                margin: 20px 0;
+            }
+
+            .team-name {
+                font-size: 1.6rem;
+                margin: 25px 0;
+            }
+
+            .members-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .member-card {
+                padding: 12px;
+            }
+
+            .achievement-item {
+                font-size: 0.98rem;
+                margin: 10px 0;
+            }
+
+            .download-btn {
+                padding: 13px 22px;
+                font-size: 0.95rem;
+                margin: 20px 0;
+            }
+
+            svg {
+                max-width: 170px;
+                height: auto;
+            }
+
+            .achievements {
+                padding: 18px;
+                margin: 20px 0;
+            }
+
+            .team-members {
+                padding: 20px;
+                margin: 20px 0;
+            }
+
+            .footer {
+                margin-top: 30px;
+                padding-top: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 8px;
+            }
+
+            .container {
+                padding: 25px 15px;
+                border: 2px solid #ffc107;
+                border-radius: 10px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+                margin-bottom: 8px;
+            }
+
+            .header img {
+                width: 85px;
+            }
+
+            .subtitle {
+                font-size: 0.85rem;
+                line-height: 1.3;
+                margin-bottom: 5px;
+            }
+
+            .tagline {
+                font-size: 0.8rem;
+            }
+
+            .position-badge {
+                font-size: 0.95rem;
+                padding: 9px 18px;
+                margin: 15px 0;
+            }
+
+            .team-name {
+                font-size: 1.3rem;
+                margin: 20px 0;
+            }
+
+            .members-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .member-card {
+                padding: 10px;
+            }
+
+            .member-card svg {
+                width: 40px;
+                height: 40px;
+            }
+
+            .achievement-item {
+                font-size: 0.9rem;
+                margin: 8px 0;
+            }
+
+            .achievement-item svg {
+                width: 20px;
+                height: 20px;
+                margin-right: 12px;
+            }
+
+            .download-btn {
+                padding: 11px 18px;
+                font-size: 0.85rem;
+                margin: 15px 0;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            svg {
+                max-width: 130px;
+                height: auto;
+            }
+
+            .achievements {
+                padding: 15px;
+                margin: 15px 0;
+            }
+
+            .achievements h3 {
+                font-size: 1rem;
+                margin-bottom: 12px;
+            }
+
+            .team-members {
+                padding: 15px;
+                margin: 15px 0;
+            }
+
+            .team-members h4 {
+                font-size: 0.95rem;
+                margin-bottom: 12px;
+            }
+
+            .footer {
+                font-size: 0.75rem;
+                margin-top: 20px;
+                padding-top: 15px;
+            }
+
+            .organization {
+                font-size: 0.85rem;
+            }
+
+            .date {
+                font-size: 0.75rem;
+            }
+
+            .icf-credit {
+                font-size: 0.65rem;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Print/Export Styles */
+        @media print {
+            body {
+                background: #ffffff !important;
+                padding: 0 !important;
+            }
+
+            .container {
+                box-shadow: none !important;
+                padding: 40px !important;
+                margin: 0 !important;
+                max-width: none !important;
+            }
+
+            .particle {
+                display: none !important;
+            }
+
+            * {
+                animation: none !important;
+            }
+        }
+
+        .export-container {
+            background: #ffffff !important;
+            animation: none !important;
+        }
+
+        .export-container * {
+            animation: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background particles -->
+    <div class="particle" style="left: 10%; top: 20%; animation-delay: 0s;"></div>
+    <div class="particle" style="left: 15%; top: 60%; animation-delay: 1s;"></div>
+    <div class="particle" style="left: 80%; top: 30%; animation-delay: 2s;"></div>
+    <div class="particle" style="left: 85%; top: 70%; animation-delay: 1.5s;"></div>
+    <div class="particle" style="left: 50%; top: 10%; animation-delay: 0.5s;"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div style="margin-bottom: 20px;">
+                <img src="https://github.com/mohamedsillahkanu/gdp-dashboard-2/raw/6c7463b0d5c3be150aafae695a4bcbbd8aeb1499/ICF-SL.jpg" alt="ICF-SL Logo" style="width: 110px; height: auto; border-radius: 12px; border: 3px solid #ffc107;" crossOrigin="anonymous">
+            </div>
+            <h1>CONGRATULATIONS</h1>
+            <div class="subtitle">SCHOOL-BASED DISTRIBUTION OF ITNS 2026</div>
+            <p class="tagline">Informatics Consultancy Firm-Sierra Leone</p>
+        </div>
+
+        <!-- 1st Position Badge -->
+        <div style="text-align: center;">
+            <div class="position-badge">1st Position</div>
+        </div>
+
+        <!-- Trophy -->
+        <div class="trophy-container">
+            <svg width="220" height="320" viewBox="0 0 220 320" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#fff9e6;stop-opacity:1" />
+                        <stop offset="30%" style="stop-color:#ffd700;stop-opacity:1" />
+                        <stop offset="70%" style="stop-color:#ffed4e;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#cc8800;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="baseGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+                        <stop offset="50%" style="stop-color:#333333;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#1a1a1a;stop-opacity:1" />
+                    </linearGradient>
+                    <radialGradient id="cupGlow" cx="50%" cy="30%">
+                        <stop offset="0%" style="stop-color:#ffffcc;stop-opacity:0.8" />
+                        <stop offset="100%" style="stop-color:#ffed4e;stop-opacity:0" />
+                    </radialGradient>
+                    <filter id="shadow">
+                        <feDropShadow dx="0" dy="8" stdDeviation="4" flood-opacity="0.4"/>
+                    </filter>
+                </defs>
+                
+                <!-- Main Trophy Shadow -->
+                <ellipse cx="110" cy="295" rx="80" ry="12" fill="#000000" opacity="0.15"/>
+                
+                <!-- Left Handle -->
+                <path d="M 55 95 Q 30 110 32 140 Q 33 155 50 165" fill="none" stroke="url(#goldGradient)" stroke-width="10" stroke-linecap="round" filter="url(#shadow)"/>
+                
+                <!-- Right Handle -->
+                <path d="M 165 95 Q 190 110 188 140 Q 187 155 170 165" fill="none" stroke="url(#goldGradient)" stroke-width="10" stroke-linecap="round" filter="url(#shadow)"/>
+                
+                <!-- Cup Body - Bottom part -->
+                <path d="M 55 85 L 60 150 Q 60 165 75 170 L 145 170 Q 160 165 160 150 L 165 85 Z" fill="url(#goldGradient)" stroke="#b8860b" stroke-width="2" filter="url(#shadow)"/>
+                
+                <!-- Cup Rim - Top -->
+                <ellipse cx="110" cy="85" rx="55" ry="15" fill="url(#goldGradient)" stroke="#b8860b" stroke-width="2"/>
+                <ellipse cx="110" cy="82" rx="55" ry="12" fill="#fffacd"/>
+                
+                <!-- Cup Highlight/Shine -->
+                <ellipse cx="90" cy="115" rx="20" ry="30" fill="url(#cupGlow)"/>
+                
+                <!-- Cup Interior reflection -->
+                <path d="M 65 90 Q 80 120 85 155" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.6"/>
+                
+                <!-- Stem/Pedestal -->
+                <rect x="95" y="170" width="30" height="60" fill="url(#goldGradient)" stroke="#b8860b" stroke-width="2" filter="url(#shadow)"/>
+                
+                <!-- Stem shine -->
+                <rect x="98" y="172" width="6" height="56" fill="#ffffff" opacity="0.3"/>
+                
+                <!-- Base Ring -->
+                <ellipse cx="110" cy="230" rx="75" ry="18" fill="url(#baseGradient)" stroke="#000000" stroke-width="2" filter="url(#shadow)"/>
+                
+                <!-- Base Top Ring (lighter) -->
+                <ellipse cx="110" cy="227" rx="75" ry="15" fill="#444444" stroke="#666666" stroke-width="1"/>
+                
+                <!-- Base Shine -->
+                <ellipse cx="110" cy="227" rx="70" ry="8" fill="#555555" opacity="0.6"/>
+                
+                <!-- Trophy Polish/Reflection Lines -->
+                <path d="M 75 100 Q 80 110 75 140" stroke="#ffffff" stroke-width="1.5" opacity="0.4" fill="none"/>
+                <path d="M 145 100 Q 140 110 145 140" stroke="#ffffff" stroke-width="1.5" opacity="0.4" fill="none"/>
+                
+                <!-- Stars on Base -->
+                <g fill="#ffc107" opacity="0.8">
+                    <!-- Left star -->
+                    <path d="M 45 215 L 49 224 L 59 224 L 51 230 L 55 239 L 45 233 L 35 239 L 39 230 L 31 224 L 41 224 Z"/>
+                    <!-- Right star -->
+                    <path d="M 175 215 L 179 224 L 189 224 L 181 230 L 185 239 L 175 233 L 165 239 L 169 230 L 161 224 L 171 224 Z"/>
+                    <!-- Top center star -->
+                    <path d="M 110 50 L 115 62 L 128 62 L 117 70 L 122 82 L 110 74 L 98 82 L 103 70 L 92 62 L 105 62 Z"/>
+                </g>
+            </svg>
+        </div>
+
+        <!-- Team Name -->
+        <div style="text-align: center; margin: 30px 0;">
+            <svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" style="margin: 0 auto 15px;">
+                <!-- Medal Ribbon Left -->
+                <rect x="5" y="0" width="8" height="20" fill="#004080"/>
+                <!-- Medal Ribbon Right -->
+                <rect x="47" y="0" width="8" height="20" fill="#004080"/>
+                <!-- Medal Circle -->
+                <circle cx="30" cy="28" r="18" fill="#ffc107" stroke="#004080" stroke-width="2"/>
+                <!-- Inner Circle -->
+                <circle cx="30" cy="28" r="14" fill="none" stroke="#004080" stroke-width="2"/>
+                <!-- Star inside medal -->
+                <path d="M 30 18 L 33 25 L 40 25 L 35 30 L 37 37 L 30 33 L 23 37 L 25 30 L 20 25 L 27 25 Z" fill="#004080"/>
+            </svg>
+            <div class="team-name">TEAM PUJEN</div>
+        </div>
+
+        <!-- Achievements -->
+        <div class="achievements">
+            <h3>Achievements</h3>
+            <div class="achievement-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="margin-right: 15px; flex-shrink: 0;">
+                    <circle cx="12" cy="12" r="11" fill="none" stroke="#ffc107" stroke-width="2"/>
+                    <circle cx="12" cy="12" r="10" fill="#ffc107"/>
+                    <path d="M 8 12 L 11 15 L 16 9" stroke="#004080" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                ITN Tracking System - Successfully Completed
+            </div>
+            <div class="achievement-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="margin-right: 15px; flex-shrink: 0;">
+                    <circle cx="12" cy="12" r="11" fill="none" stroke="#ffc107" stroke-width="2"/>
+                    <circle cx="12" cy="12" r="10" fill="#ffc107"/>
+                    <path d="M 8 12 L 11 15 L 16 9" stroke="#004080" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                ITN Distribution Campaign - Successfully Completed
+            </div>
+            <div class="achievement-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="margin-right: 15px; flex-shrink: 0;">
+                    <circle cx="12" cy="12" r="11" fill="none" stroke="#ffc107" stroke-width="2"/>
+                    <circle cx="12" cy="12" r="10" fill="#ffc107"/>
+                    <path d="M 8 12 L 11 15 L 16 9" stroke="#004080" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Exceptional Dedication to Malaria Prevention
+            </div>
+            <div class="achievement-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="margin-right: 15px; flex-shrink: 0;">
+                    <circle cx="12" cy="12" r="11" fill="none" stroke="#ffc107" stroke-width="2"/>
+                    <circle cx="12" cy="12" r="10" fill="#ffc107"/>
+                    <path d="M 8 12 L 11 15 L 16 9" stroke="#004080" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Outstanding Data Quality & Accuracy
+            </div>
+        </div>
+
+        <!-- Team Members -->
+        <div class="team-members">
+            <h4>Team Members</h4>
+            <div class="members-grid">
+                <div class="member-card">
+                    <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" style="margin: 0 auto 10px;">
+                        <!-- Head -->
+                        <circle cx="25" cy="15" r="10" fill="#004080" stroke="#ffc107" stroke-width="1.5"/>
+                        <!-- Body -->
+                        <path d="M 25 25 L 25 38" stroke="#004080" stroke-width="2"/>
+                        <!-- Arms -->
+                        <path d="M 15 28 L 35 28" stroke="#004080" stroke-width="2"/>
+                        <!-- Legs -->
+                        <path d="M 20 38 L 20 45 M 30 38 L 30 45" stroke="#004080" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <div style="font-size: 0.95rem; color: #004080; font-weight: 700;">Zainab Kamara</div>
+                </div>
+                <div class="member-card">
+                    <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" style="margin: 0 auto 10px;">
+                        <!-- Head -->
+                        <circle cx="25" cy="15" r="10" fill="#004080" stroke="#ffc107" stroke-width="1.5"/>
+                        <!-- Body -->
+                        <path d="M 25 25 L 25 38" stroke="#004080" stroke-width="2"/>
+                        <!-- Arms -->
+                        <path d="M 15 28 L 35 28" stroke="#004080" stroke-width="2"/>
+                        <!-- Legs -->
+                        <path d="M 20 38 L 20 45 M 30 38 L 30 45" stroke="#004080" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <div style="font-size: 0.95rem; color: #004080; font-weight: 700;">Theodore Sesay</div>
+                </div>
+                <div class="member-card">
+                    <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" style="margin: 0 auto 10px;">
+                        <!-- Head -->
+                        <circle cx="25" cy="15" r="10" fill="#004080" stroke="#ffc107" stroke-width="1.5"/>
+                        <!-- Body -->
+                        <path d="M 25 25 L 25 38" stroke="#004080" stroke-width="2"/>
+                        <!-- Arms -->
+                        <path d="M 15 28 L 35 28" stroke="#004080" stroke-width="2"/>
+                        <!-- Legs -->
+                        <path d="M 20 38 L 20 45 M 30 38 L 30 45" stroke="#004080" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <div style="font-size: 0.95rem; color: #004080; font-weight: 700;">Foday Sankoh</div>
+                </div>
+                <div class="member-card">
+                    <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" style="margin: 0 auto 10px;">
+                        <!-- Head -->
+                        <circle cx="25" cy="15" r="10" fill="#004080" stroke="#ffc107" stroke-width="1.5"/>
+                        <!-- Body -->
+                        <path d="M 25 25 L 25 38" stroke="#004080" stroke-width="2"/>
+                        <!-- Arms -->
+                        <path d="M 15 28 L 35 28" stroke="#004080" stroke-width="2"/>
+                        <!-- Legs -->
+                        <path d="M 20 38 L 20 45 M 30 38 L 30 45" stroke="#004080" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <div style="font-size: 0.95rem; color: #004080; font-weight: 700;">Yesha Sheriff</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Download Button -->
+        <div style="text-align: center; margin: 30px 0;">
+            <button onclick="downloadCertificate()" class="download-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display: inline-block; margin-right: 8px; vertical-align: middle;">
+                    <path d="M12 2v10m0 0l-4-4m4 4l4-4M4 15h16a2 2 0 012 2v3a2 2 0 01-2 2H4a2 2 0 01-2-2v-3a2 2 0 012-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Download as Image
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p class="organization">
+                <strong>Informatics Consultancy Firm-Sierra Leone (ICF-SL)</strong>
+            </p>
+            <p class="date">Year 2026</p>
+            <p class="icf-credit">Driving Data-Driven Solutions for Health and Development</p>
+        </div>
+    </div>
+
+    <script>
+        function downloadCertificate() {
+            const element = document.querySelector('.container');
+            const filename = 'Team-Pujen-School-Based-ITN-Distribution-2026.png';
+            
+            // Get button reference
+            const btn = event.target.closest('.download-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Generating Image...';
+            btn.disabled = true;
+
+            // Wait for images to load properly
+            setTimeout(() => {
+                // Temporarily modify styles for export
+                const originalBackground = element.style.background;
+                const originalBoxShadow = element.style.boxShadow;
+                
+                element.style.background = '#ffffff';
+                element.style.boxShadow = 'none';
+
+                // Hide particles during export
+                const particles = document.querySelectorAll('.particle');
+                particles.forEach(p => p.style.display = 'none');
+
+                // Remove animations
+                const style = document.createElement('style');
+                style.innerHTML = `
+                    * {
+                        animation: none !important;
+                        transition: none !important;
+                    }
+                `;
+                document.head.appendChild(style);
+
+                // Generate canvas with high quality settings
+                html2canvas(element, {
+                    backgroundColor: '#ffffff',
+                    scale: 3,
+                    logging: false,
+                    useCORS: true,
+                    allowTaint: true,
+                    windowHeight: element.scrollHeight + 20,
+                    windowWidth: element.scrollWidth + 20,
+                    imageTimeout: 5000,
+                    removeContainer: true,
+                    foreignObjectRendering: true
+                }).then(canvas => {
+                    // Create high-quality image
+                    const link = document.createElement('a');
+                    link.href = canvas.toDataURL('image/png', 1.0);
+                    link.download = filename;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+
+                    // Restore original styles
+                    element.style.background = originalBackground;
+                    element.style.boxShadow = originalBoxShadow;
+                    particles.forEach(p => p.style.display = '');
+                    document.head.removeChild(style);
+
+                    // Restore button
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+
+                    alert('✅ Image downloaded successfully!');
+                }).catch(error => {
+                    console.error('Error generating image:', error);
+                    
+                    // Restore on error
+                    element.style.background = originalBackground;
+                    element.style.boxShadow = originalBoxShadow;
+                    particles.forEach(p => p.style.display = '');
+                    document.head.removeChild(style);
+                    
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    
+                    alert('⚠️ Error generating image. Please try again or check internet connection.');
+                });
+            }, 500);
+        }
+    </script>
+</body>
+</html>
