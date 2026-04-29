@@ -614,7 +614,7 @@
         <!-- Header -->
         <div class="header">
             <div style="margin-bottom: 20px;">
-                <img src="https://github.com/mohamedsillahkanu/gdp-dashboard-2/raw/6c7463b0d5c3be150aafae695a4bcbbd8aeb1499/ICF-SL.jpg" alt="ICF-SL Logo" style="width: 110px; height: auto; border-radius: 12px; border: 3px solid #ffc107;" crossOrigin="anonymous">
+                <img id="icfLogo" src="https://github.com/mohamedsillahkanu/gdp-dashboard-2/raw/6c7463b0d5c3be150aafae695a4bcbbd8aeb1499/ICF-SL.jpg" alt="ICF-SL Logo" style="width: 110px; height: auto; border-radius: 12px; border: 3px solid #ffc107; display: block;">
             </div>
             <h1>CONGRATULATIONS</h1>
             <div class="subtitle">SCHOOL-BASED DISTRIBUTION OF ITNS 2026</div>
@@ -837,6 +837,14 @@
     </div>
 
     <script>
+        // Preload logo image with CORS
+        window.addEventListener('load', function() {
+            const logoImg = document.getElementById('icfLogo');
+            if (logoImg) {
+                logoImg.setAttribute('crossOrigin', 'anonymous');
+            }
+        });
+
         function downloadCertificate() {
             const element = document.querySelector('.container');
             const filename = 'Team-Pujen-School-Based-ITN-Distribution-2026.png';
@@ -847,76 +855,90 @@
             btn.innerHTML = 'Generating Image...';
             btn.disabled = true;
 
-            // Wait for images to load properly
+            // Ensure logo has crossOrigin set
+            const logoImg = document.getElementById('icfLogo');
+            if (logoImg) {
+                logoImg.crossOrigin = 'anonymous';
+            }
+
+            // Store original styles
+            const originalStyles = {
+                background: element.style.background,
+                boxShadow: element.style.boxShadow,
+                animation: element.style.animation
+            };
+            
+            // Hide particles
+            const particles = document.querySelectorAll('.particle');
+            const particleStyles = [];
+            particles.forEach((p, i) => {
+                particleStyles[i] = p.style.display;
+                p.style.display = 'none';
+            });
+
+            // Disable animations
+            const styleSheet = document.createElement('style');
+            styleSheet.innerHTML = `
+                .container, .container * { animation: none !important; }
+                .trophy-container { animation: none !important; }
+                .position-badge { animation: none !important; }
+            `;
+            document.head.appendChild(styleSheet);
+
+            // Set clean background
+            element.style.background = '#ffffff';
+            element.style.boxShadow = 'none';
+
+            // Wait for images to fully load
             setTimeout(() => {
-                // Temporarily modify styles for export
-                const originalBackground = element.style.background;
-                const originalBoxShadow = element.style.boxShadow;
-                
-                element.style.background = '#ffffff';
-                element.style.boxShadow = 'none';
-
-                // Hide particles during export
-                const particles = document.querySelectorAll('.particle');
-                particles.forEach(p => p.style.display = 'none');
-
-                // Remove animations
-                const style = document.createElement('style');
-                style.innerHTML = `
-                    * {
-                        animation: none !important;
-                        transition: none !important;
-                    }
-                `;
-                document.head.appendChild(style);
-
-                // Generate canvas with high quality settings
                 html2canvas(element, {
                     backgroundColor: '#ffffff',
-                    scale: 3,
+                    scale: 2.5,
                     logging: false,
                     useCORS: true,
                     allowTaint: true,
-                    windowHeight: element.scrollHeight + 20,
-                    windowWidth: element.scrollWidth + 20,
-                    imageTimeout: 5000,
-                    removeContainer: true,
-                    foreignObjectRendering: true
+                    removeContainer: false,
+                    ignoreElements: function(el) {
+                        return el.classList && el.classList.contains('particle');
+                    }
                 }).then(canvas => {
-                    // Create high-quality image
+                    // Verify canvas has content
+                    if (canvas.width === 0 || canvas.height === 0) {
+                        throw new Error('Canvas is empty');
+                    }
+
+                    // Create image and download
+                    const image = canvas.toDataURL('image/png');
                     const link = document.createElement('a');
-                    link.href = canvas.toDataURL('image/png', 1.0);
+                    link.href = image;
                     link.download = filename;
                     document.body.appendChild(link);
                     link.click();
-                    document.body.removeChild(link);
+                    setTimeout(() => document.body.removeChild(link), 100);
 
-                    // Restore original styles
-                    element.style.background = originalBackground;
-                    element.style.boxShadow = originalBoxShadow;
-                    particles.forEach(p => p.style.display = '');
-                    document.head.removeChild(style);
-
-                    // Restore button
+                    // Restore everything
+                    restoreStyles();
                     btn.innerHTML = originalText;
                     btn.disabled = false;
-
-                    alert('✅ Image downloaded successfully!');
+                    alert('✅ Certificate downloaded successfully!');
                 }).catch(error => {
-                    console.error('Error generating image:', error);
-                    
-                    // Restore on error
-                    element.style.background = originalBackground;
-                    element.style.boxShadow = originalBoxShadow;
-                    particles.forEach(p => p.style.display = '');
-                    document.head.removeChild(style);
-                    
+                    console.error('Download error:', error);
+                    restoreStyles();
                     btn.innerHTML = originalText;
                     btn.disabled = false;
-                    
-                    alert('⚠️ Error generating image. Please try again or check internet connection.');
+                    alert('❌ Error creating image. Please try again.');
                 });
             }, 500);
+
+            function restoreStyles() {
+                element.style.background = originalStyles.background;
+                element.style.boxShadow = originalStyles.boxShadow;
+                element.style.animation = originalStyles.animation;
+                particles.forEach((p, i) => {
+                    p.style.display = particleStyles[i];
+                });
+                document.head.removeChild(styleSheet);
+            }
         }
     </script>
 </body>
